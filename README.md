@@ -1,1 +1,3 @@
 # BitcoinBalanceCheck
+
+How it works?
