@@ -2,7 +2,7 @@
 
 **What is the script about?**
 
-The script allows to check the Bitcoin balance of one or more addresses at a specific time. It let you check the current balance or the balance at one time in the past.
+The script allows to check the Bitcoin balance of one or more addresses at a specific time. It let you check the current balance or the balance at one time in the past. The script uses the API from blockcypher.com.
 
 **How it works?**
 
@@ -12,6 +12,8 @@ for example:
 ```python bitcoin.py address.txt 01-01-2016```
 
 It gives the balance on 1st January 2016 of all addresses listed in address.txt file
+The result looks like
+![Result of balance check](http://i.imgur.com/iY7EoPL.png)
 
 If you do not provide a date then the current balance is given back.
 

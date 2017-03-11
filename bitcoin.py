@@ -63,4 +63,7 @@ for k, v in balances.iteritems():
     totalBalance += v
     print "%s %f" % (k, v/100000000.0)
 
-print "Total Balance on %s was %f Bitcoin" % (date, totalBalance/100000000.0)
+if date <> "31-12-9999":
+	print "Total balance on %s was %f Bitcoin" % (date, totalBalance/100000000.0)
+else:
+	print "Total current balance is %f Bitcoin" % (totalBalance/100000000.0)
