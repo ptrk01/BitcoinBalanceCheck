@@ -1,19 +1,19 @@
 # The software is released under MIT License.
 #
 # Copyright 2017 github.com/ptrk01
-# 
+#
 # Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
 # documentation files (the "Software"), to deal in the Software # without restriction, including without limitation
 # the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and
 # to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-# 
-# The above copyright notice and this permission notice shall be included in all copies or substantial portions 
+#
+# The above copyright notice and this permission notice shall be included in all copies or substantial portions
 # of the Software.
-# 
+#
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO
 # THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A #PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF 
-# CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF
+# CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 # DEALINGS IN THE SOFTWARE.
 
 import urllib
@@ -22,6 +22,7 @@ import time
 import datetime
 import sys
 import os.path
+import collections
 
 if len(sys.argv) < 2:
     sys.exit("ERROR: Please provide a file with addresses")
@@ -35,7 +36,7 @@ if os.path.isfile(file) is False:
 date = "31-12-9999"
 if len(sys.argv) == 3:
     date = sys.argv[2]
-    
+
 try:
     datetime.datetime.strptime(date, '%d-%m-%Y')
 except ValueError:
@@ -57,7 +58,7 @@ for address in addresses:
     try:
         transactions = result["txrefs"]
     except KeyError:
-        print result
+        continue
     for i in range(len(transactions)):
         ts = time.strptime(transactions[i]["confirmed"][:19], "%Y-%m-%dT%H:%M:%S")
         txDate = time.mktime(datetime.datetime.strptime(time.strftime("%m-%d-%Y", ts), "%m-%d-%Y").timetuple())
@@ -66,10 +67,12 @@ for address in addresses:
        		balances[address] = transactions[i]["ref_balance"]
                 lastDate = transactions[i]["confirmed"]
 
-totalBalance = 0    
-for k, v in balances.iteritems():
-    totalBalance += v
-    print "%s %f" % (k, v/100000000.0)
+totalBalance = 0
+balances = sorted(balances.items(), key=lambda x: x[1], reverse=True)
+#print balances
+for b in balances:
+    totalBalance += b[1]
+    print "%s %f" % ((b[0] + " " * (40 - len(b[0]))), b[1]/100000000.0)
 
 if date <> "31-12-9999":
 	print "Total balance on %s was %f Bitcoin" % (date, totalBalance/100000000.0)
