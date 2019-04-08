@@ -16,6 +16,8 @@
 # CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 # DEALINGS IN THE SOFTWARE.
 
+#PLEASE NOTICE: This program works with Python version up to 2.7 (not compatible with Python 3)
+
 import urllib
 import json
 import time
